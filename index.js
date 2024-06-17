@@ -87,7 +87,7 @@ class Sprite {
 
 const player = new Sprite({
     position: {
-        x: canvas.width / 2 - 192 / 4 / 2,
+        x: canvas.width / 2 - 192 / 4 / 2 -50,
         y: canvas.height / 2 - 68 / 2
     }, image: playerImage,
     frames: {
@@ -125,35 +125,93 @@ function animate() {
         boundary.draw();
     })
 
-
+    let moving = true
 
     if (movement_keys.w.pressed && lastKey === movement_keys.w.key) {
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
-            if (isColliding({ object1: player, object2: testBoundary })) {
-                console.log("Colliding");
+            if (isColliding({
+                object1: player, 
+                object2: {
+                    ...boundary, position: {
+                        x: boundary.position.x,
+                        y: boundary.position.y + 3
+                    }
+                }
+            })) {
+                moving = false
                 break;
             }
-
         }
-        movables.forEach(movable => {
-            movable.position.y += 3;
-        })
+        if (moving) {
+            movables.forEach(movable => {
+                movable.position.y += 3;
+            })
+        }
     }
     if (movement_keys.a.pressed && lastKey === movement_keys.a.key) {
-        movables.forEach(movable => {
-            movable.position.x += 3;
-        })
+
+        for (let i = 0; i < boundaries.length; i++) {
+            const boundary = boundaries[i]
+            if (isColliding({
+                object1: player, 
+                object2: {
+                    ...boundary, position: {
+                        x: boundary.position.x + 3,
+                        y: boundary.position.y
+                    }
+                }
+            })) {
+                moving = false
+                break;
+            }
+        } if (moving) {
+            movables.forEach(movable => {
+                movable.position.x += 3;
+            })
+        }
     }
     if (movement_keys.s.pressed && lastKey === movement_keys.s.key) {
-        movables.forEach(movable => {
-            movable.position.y -= 3;
-        })
+        for (let i = 0; i < boundaries.length; i++) {
+            const boundary = boundaries[i]
+            if (isColliding({
+                object1: player, 
+                object2: {
+                    ...boundary, position: {
+                        x: boundary.position.x,
+                        y: boundary.position.y - 3
+                    }
+                }
+            })) {
+                moving = false
+                break;
+            }
+        } if (moving) {
+            movables.forEach(movable => {
+                movable.position.y -= 3;
+            })
+        }
     }
     if (movement_keys.d.pressed && lastKey === movement_keys.d.key) {
-        movables.forEach(movable => {
-            movable.position.x -= 3;
-        })
+        for (let i = 0; i < boundaries.length; i++) {
+            const boundary = boundaries[i]
+            if (isColliding({
+                object1: player, 
+                object2: {
+                    ...boundary, position: {
+                        x: boundary.position.x - 3,
+                        y: boundary.position.y
+                    }
+                }
+            })) {
+                moving = false
+                break;
+            }
+        } if (moving) {
+            movables.forEach(movable => {
+                movable.position.x -= 3;
+            })
+        }
     }
 }
 
