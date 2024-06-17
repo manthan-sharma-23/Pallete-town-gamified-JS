@@ -3,6 +3,9 @@
   height: 100vh;
   padding: 2px;
   background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 * {
